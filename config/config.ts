@@ -1,4 +1,3 @@
-import { resolve } from 'node:path'
 import { defineConfig } from '@umijs/max'
 import icons from './icons'
 import proxy from './proxy'
@@ -11,7 +10,6 @@ export default defineConfig({
    * @name 开发插件
    * @doc https://umijs.org/docs/guides/plugins
    */
-  plugins: [resolve(__dirname, './plugins/html')],
   /**
    * @name 开启 hash 模式
    * @description 让 build 之后的产物包含 hash 后缀。通常用于增量发布和避免浏览器加载缓存。
@@ -47,6 +45,17 @@ export default defineConfig({
    * @doc https://umijs.org/docs/max/access
    */
   access: {},
+  /**
+   * @name <head> 中额外的 script
+   * @description 配置 <head> 中额外的 script
+   */
+  headScripts: [
+    // 解决首次加载时白屏的问题
+    {
+      src: '/scripts/loading.js',
+      async: true,
+    },
+  ],
   /**
    * @name 数据流插件
    * @@doc https://umijs.org/docs/max/data-flow
