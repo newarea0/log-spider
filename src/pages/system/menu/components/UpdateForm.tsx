@@ -156,7 +156,7 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ record, ...props }) => {
                 <ProFormText
                   name="query"
                   label="路由参数"
-                  tooltip='访问路由的默认传递参数，如：`{"id": 1, "name": "vivy"}`'
+                  tooltip='访问路由的默认传递参数，如：`{"id": 1, "name": "LogSpider"}`'
                   rules={[{ max: 255 }]}
                 />
                 )

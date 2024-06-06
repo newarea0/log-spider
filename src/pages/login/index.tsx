@@ -44,7 +44,7 @@ function Login() {
   return (
     <div className="flex flex-col justify-center h-[100vh]">
       <div>
-        <LoginForm title="Vivy" subTitle="基于 Nest & React 权限管理系统" onFinish={handleLogin}>
+        <LoginForm title="LogSpider" subTitle="日志分析处理平台" onFinish={handleLogin}>
           <ProFormText
             name="username"
             initialValue="admin"
@@ -109,7 +109,7 @@ function Login() {
           </div>
         </LoginForm>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

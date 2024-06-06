@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'Vivy-Token'
+const TokenKey = 'LogSpider-Token'
 
-const ExpiresInKey = 'Vivy-Expires-In'
+const ExpiresInKey = 'LogSpider-Expires-In'
 
 export function getToken() {
   return Cookies.get(TokenKey)

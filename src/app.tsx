@@ -78,7 +78,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
 
   return {
     avatarProps: {
-      src: user?.avatar,
+      // src: user?.avatar,
+      icon: <img src="/avatar.png" />,
+      style: { backgroundColor: '#d2edf3' },
       title: <AvatarName name={user?.nickName || ''} />,
       render: (_, children) => {
         return <AvatarDropdown>{children}</AvatarDropdown>
@@ -107,24 +109,24 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     postMenuData(menuData) {
       return buildMenus(menuData!)
     },
-    actionsRender: () => {
-      return [
-        <Tooltip key="docs" title="项目文档">
-          <ReadFilled
-            onClick={() => {
-              window.open('https://haiweilian.github.io/vivy-nest-admin')
-            }}
-          />
-        </Tooltip>,
-        <Tooltip key="github" title="项目源码">
-          <GithubOutlined
-            onClick={() => {
-              window.open('https://github.com/haiweilian/vivy-nest-admin')
-            }}
-          />
-        </Tooltip>,
-      ]
-    },
+    // actionsRender: () => {
+    //   return [
+    //     <Tooltip key="docs" title="项目文档">
+    //       <ReadFilled
+    //         onClick={() => {
+    //           window.open('https://haiweilian.github.io/vivy-nest-admin')
+    //         }}
+    //       />
+    //     </Tooltip>,
+    //     <Tooltip key="github" title="项目源码">
+    //       <GithubOutlined
+    //         onClick={() => {
+    //           window.open('https://github.com/haiweilian/vivy-nest-admin')
+    //         }}
+    //       />
+    //     </Tooltip>,
+    //   ]
+    // },
     childrenRender: (children) => {
       return children
     },

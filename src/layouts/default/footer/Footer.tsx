@@ -10,8 +10,8 @@ const Footer: React.FC = () => {
       copyright={`${new Date().getFullYear()} haiweilian`}
       links={[
         {
-          key: 'Vivy React',
-          title: 'Vivy React',
+          key: 'LogSpider',
+          title: 'LogSpider',
           href: 'https://github.com/haiweilian/vivy-nest-admin',
           blankTarget: true,
         },
