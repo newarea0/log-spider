@@ -11,6 +11,7 @@ import { SimpleLayout } from '@/layouts/simple'
  * @param dynamicRoutes 动态路由，由 Api 接口返回
  * @implements 由动态路由表完全覆盖原始路由表，把原始路由信息按需补充到动态路由信息上。该函数的作用是修改 rawRoutes，不需要返回值
  */
+// eslint-disable-next-line unused-imports/no-unused-vars
 export function buildRoutes(rawRoutes: AppRouteMenu[], dynamicRoutes: AppRouteMenu[]) {
   // 找到主布局路由，是一个数组，其中都是使用主布局（默认布局）的路由
   const layout = rawRoutes.find(item => item.isLayout)?.children || []
@@ -25,7 +26,8 @@ export function buildRoutes(rawRoutes: AppRouteMenu[], dynamicRoutes: AppRouteMe
   }
 
   // 转换路由，第一参数表示所有的路由来源
-  const routes = transformRoute([...localRoutes, ...dynamicRoutes], routeComponents)
+  // const routes = transformRoute([...localRoutes, ...dynamicRoutes], routeComponents)
+  const routes = transformRoute([...localRoutes], routeComponents)
   routes.forEach((route) => {
     // 使用全局布局添加到主布局路由下
     if (route.layout !== false) {

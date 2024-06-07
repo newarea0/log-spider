@@ -131,6 +131,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     childrenRender: (children) => {
       return children
     },
+    menu: {
+      defaultOpenAll: true,
+      autoClose: false,
+    },
     ...initialState?.settings,
   }
 }
