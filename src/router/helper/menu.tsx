@@ -2,7 +2,7 @@ import { Icon } from '@umijs/max'
 import type { AppRouteMenu } from '../types'
 
 /**
- * 构建菜单
+ * 构建菜单，主要是将图标名（字符串，在系统上配置菜单时选择），转换为图标组件
  * @param rawMenus 原始菜单
  * @returns 构建后的菜单
  */

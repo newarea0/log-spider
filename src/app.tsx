@@ -106,6 +106,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         width: '331px',
       },
     ],
+    // https://procomponents.ant.design/components/layout#从服务器获取
     postMenuData(menuData) {
       return buildMenus(menuData!)
     },
@@ -215,6 +216,8 @@ let dynamicRoutes: any[] = []
  * @doc https://umijs.org/docs/api/runtime-config#patchclientroutes-routes-
  */
 export const patchClientRoutes: RuntimeConfig['patchClientRoutes'] = async ({ routes }) => {
+  // 如果 config/config.ts 中没有 routes 配置，Umi 会进入约定式路由模式，然后分析 src/pages 目录拿到路由配置
+  // 因此这里 routes 由解析 src/pages 目录而得到
   buildRoutes(routes, dynamicRoutes)
 }
 
