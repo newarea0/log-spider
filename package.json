@@ -11,7 +11,7 @@
   "dependencies": {
     "@ant-design/charts": "^1.4.2",
     "@ant-design/icons": "^4.7.0",
-    "@ant-design/pro-components": "^2.0.1",
+    "@ant-design/pro-components": "^2.7.10",
     "@iconify-json/ant-design": "^1.1.10",
     "@iconify-json/ion": "^1.1.12",
     "@wangeditor/editor": "^5.1.23",
@@ -38,6 +38,7 @@
     "eslint": "^9.4.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.3.2",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "umi-presets-pro": "^2.0.3"
   }
 }

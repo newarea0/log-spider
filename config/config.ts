@@ -36,8 +36,8 @@ export default defineConfig({
    * @doc https://umijs.org/docs/max/antd#antd
    */
   antd: {
-    appConfig: {},
-    configProvider: {},
+    // appConfig: {},
+    // configProvider: {},
   },
   /**
    * @name 权限插件
