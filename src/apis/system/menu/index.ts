@@ -64,7 +64,7 @@ export function optionMenuTree() {
  * 查询用户路由&菜单
  */
 export function getUserRouters() {
-  return request<RouterTreeResult[]>('/menu/getUserRouters', {
+  return request<RouterTreeResult[]>('/getRouters', {
     method: RequestEnum.GET,
     skipErrorHandler: true,
   })
