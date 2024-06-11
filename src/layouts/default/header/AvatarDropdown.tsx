@@ -1,17 +1,14 @@
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
-import { SettingDrawer } from '@ant-design/pro-components'
+import { LogoutOutlined } from '@ant-design/icons'
 import { history, useModel } from '@umijs/max'
 import { Dropdown } from 'antd'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import { flushSync } from 'react-dom'
 import { logout } from '@/apis/auth/login'
 import { PageEnum } from '@/enums/pageEnum'
 import { removeToken } from '@/utils/auth'
-import { setThemeSetting } from '@/utils/setting'
 
 const AvatarDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { initialState, setInitialState } = useModel('@@initialState')
-  const [settingOpen, setSettingOpen] = useState(false)
+  const { setInitialState } = useModel('@@initialState')
 
   const handleLogout = async () => {
     await logout()
@@ -22,11 +19,7 @@ const AvatarDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) =
   const onMenuClick = useCallback(
     async (event: any) => {
       const { key } = event
-      if (key === 'center') {
-        history.push(`/account/${key}`)
-      } else if (key === 'setting') {
-        setSettingOpen(true)
-      } else if (key === 'logout') {
+      if (key === 'logout') {
         await handleLogout()
         flushSync(() => {
           setInitialState(s => ({
@@ -49,20 +42,6 @@ const AvatarDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) =
           onClick: onMenuClick,
           items: [
             {
-              key: 'center',
-              icon: <UserOutlined />,
-              label: '个人中心',
-            },
-            {
-              key: 'setting',
-              icon: <SettingOutlined />,
-              label: '主题设置',
-            },
-            {
-              key: 'divider',
-              type: 'divider',
-            },
-            {
               key: 'logout',
               icon: <LogoutOutlined />,
               label: '退出登录',
@@ -72,22 +51,6 @@ const AvatarDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) =
       >
         {children}
       </Dropdown>
-      <SettingDrawer
-        collapse={settingOpen}
-        disableUrlParams
-        enableDarkTheme
-        hideHintAlert
-        hideCopyButton
-        settings={initialState?.settings}
-        onCollapseChange={setSettingOpen}
-        onSettingChange={(settings) => {
-          setThemeSetting(settings)
-          setInitialState(preInitialState => ({
-            ...preInitialState,
-            settings,
-          }))
-        }}
-      />
     </>
   )
 }

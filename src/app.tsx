@@ -1,8 +1,8 @@
-import { GithubOutlined, ReadFilled } from '@ant-design/icons'
 import type { Settings as LayoutSettings, ProLayoutProps } from '@ant-design/pro-components'
 import { history } from '@umijs/max'
 import type { RequestConfig, RunTimeLayoutConfig, RuntimeConfig } from '@umijs/max'
 import { message as Message, Modal, Tooltip } from 'antd'
+import defaultSettings from '../config/setting'
 import { buildMenus } from './router/helper/menu'
 import { buildRoutes } from './router/helper/route'
 import { getLoginUserInfo } from '@/apis/auth/login'
@@ -10,7 +10,6 @@ import { getUserRouters } from '@/apis/system/menu'
 import { PageEnum } from '@/enums/pageEnum'
 import { AvatarDropdown, AvatarName } from '@/layouts/default'
 import { getToken, removeToken } from '@/utils/auth'
-import { getThemeSetting } from '@/utils/setting'
 
 /**
  * @name InitialState 全局初始化数据配置用于 Layout 用户信息和权限初始化
@@ -19,41 +18,28 @@ import { getThemeSetting } from '@/utils/setting'
 interface InitialState {
   settings?: Partial<LayoutSettings & { token: ProLayoutProps['token'] }>
   token?: string
-  roles?: string[]
-  permissions?: string[]
   userInfo?: UserInfo
-  fetchUserInfo?: () => Promise<
-    | {
-      roles?: string[]
-      permissions?: string[]
-      userInfo?: UserInfo
-    }
-    | undefined
-  >
+  fetchUserInfo?: () => Promise<UserInfo | undefined>
 }
 export async function getInitialState(): Promise<InitialState> {
   const token = getToken()
   const location = history.location
-  const defaultSettings = getThemeSetting()
   const fetchUserInfo = async () => {
     try {
-      const { roles, permissions, sysUser } = await getLoginUserInfo()
-      return {
-        roles,
-        permissions,
-        userInfo: sysUser,
-      }
+      const res = await getLoginUserInfo()
+      return res
     } catch (error) {
       removeToken()
       history.push(PageEnum.BASE_LOGIN)
       throw error
     }
   }
+
   if (token && location.pathname !== PageEnum.BASE_LOGIN) {
     const userInfo = await fetchUserInfo()
     return {
       fetchUserInfo,
-      ...userInfo,
+      userInfo,
       settings: defaultSettings as Partial<LayoutSettings>,
     }
   } else {
@@ -73,7 +59,7 @@ export async function getInitialState(): Promise<InitialState> {
  * @name ProLayout 运行时布局配置
  * @doc https://procomponents.ant.design/components/layout#prolayout
  */
-export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
+export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   const user = initialState?.userInfo
 
   return {
@@ -81,7 +67,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       // src: user?.avatar,
       icon: <img src="/avatar.png" />,
       style: { backgroundColor: '#d2edf3' },
-      title: <AvatarName name={user?.nickName || ''} />,
+      title: <AvatarName name={user?.name || ''} />,
       render: (_, children) => {
         return <AvatarDropdown>{children}</AvatarDropdown>
       },
@@ -110,24 +96,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     postMenuData(menuData) {
       return buildMenus(menuData!)
     },
-    // actionsRender: () => {
-    //   return [
-    //     <Tooltip key="docs" title="项目文档">
-    //       <ReadFilled
-    //         onClick={() => {
-    //           window.open('https://haiweilian.github.io/vivy-nest-admin')
-    //         }}
-    //       />
-    //     </Tooltip>,
-    //     <Tooltip key="github" title="项目源码">
-    //       <GithubOutlined
-    //         onClick={() => {
-    //           window.open('https://github.com/haiweilian/vivy-nest-admin')
-    //         }}
-    //       />
-    //     </Tooltip>,
-    //   ]
-    // },
     childrenRender: (children) => {
       return children
     },
@@ -152,7 +120,7 @@ export const request: RequestConfig = {
         const token = getToken()
         const isToken = config.isToken === false
         if (token && !isToken) {
-          config.headers.Authorization = `Bearer ${token}`
+          config.headers.token = token
         }
         config.url = `${BASE_URL}${config.url}`
         return config
@@ -165,14 +133,14 @@ export const request: RequestConfig = {
   responseInterceptors: [
     [
       (response: any) => {
-        const code = response.data.code || 200
-        const message = response.data.message || '系统未知错误，请反馈给管理员'
+        const code = response.data.code || 0
+        const message = response.data.msg || '系统未知错误，请反馈给管理员'
         const getResponse = response.config.getResponse
         const skipErrorHandler = response.config.skipErrorHandler
 
         // 错误判断
         if (skipErrorHandler) {
-          if (code !== 200) {
+          if (code !== 0) {
             return Promise.reject(new Error(message))
           }
         } else if (code === 401) {
@@ -194,7 +162,7 @@ export const request: RequestConfig = {
             })
           }
           return Promise.reject(new Error(message))
-        } else if (code !== 200) {
+        } else if (code !== 0) {
           Message.error(message)
           return Promise.reject(new Error(message))
         }

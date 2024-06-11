@@ -13,29 +13,14 @@ export interface LoginParams {
   uuid?: string
 
   /**
-   * 用户名
+   * 账号
    */
-  username: string
+  accountNo: string
 
   /**
    * 用户密码
    */
   password: string
-}
-
-/**
- * 登录信息
- */
-export interface LoginResult {
-  /**
-   * 过期时间
-   */
-  expires_in: number
-
-  /**
-   * 权限令牌
-   */
-  access_token: string
 }
 
 /**

@@ -9,5 +9,5 @@ declare interface AjaxResult<T = any> {
   data?: T
 
   /** 消息 */
-  message?: string
+  msg?: string
 }

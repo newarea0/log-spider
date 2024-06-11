@@ -7,6 +7,6 @@ export default defineConfig({
    * @doc https://umijs.org/docs/api/config#define
    */
   define: {
-    BASE_URL: '/api',
+    BASE_URL: '/spider',
   },
 })

@@ -11,4 +11,5 @@ export default [
   'ion:settings-outline',
   'ion:key-outline',
   'ion:bar-chart-outline',
+  'ion:md-open',
 ]

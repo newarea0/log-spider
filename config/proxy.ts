@@ -3,8 +3,9 @@
  * @doc https://umijs.org/docs/guides/proxy
  */
 export default {
-  '/api/': {
-    target: 'http://43.140.221.180:8000',
+  '/spider/': {
+    // target: 'http://43.140.221.180:8000', // 原始
+    target: 'http://100.118.120.106:8082', // 胡雷
     changeOrigin: true,
     // pathRewrite: { '^/api': '' },
   },
